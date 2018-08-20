@@ -9,13 +9,14 @@
 <p>1.success()，请求成功的回调方法。这里的请求成功指的是，从发出请求到服务器完成响应并返回相关数据为止！也就是说，只要服务器响应了，那么就算请求完成，包括404 not found ,500 服务器内部错误等响应，所以需要开发者自己进行判断。</p>
 <p>2.fail()，请求失败的回调方法。这里的请求失败指的是，除了success()情况下的其他情况。</p>
 <p>3.complete()，无论请求成功还是失败，都会调用此回调函数。</p>
+<p>所以，根据以上知识点我们可以封装一个较为完善的get请求方法。</p>
 <h3 id="小程序的wx.request的封装">小程序的wx.request()的封装</h3>
 <pre><code>// 使用方法
 // 在js中引入相关文件传入完整的url(参数拼接在这里)，
 const util = require('你的小程序文件相对路径')
 // 调用
 util.gk_get(yoururl,function(res){
-	// 这里判断后台自定义的可能出现的各种情况，例如参数错误什么的。
+	// 这里判断和处理后台自定义的可能出现的各种情况，例如参数错误什么的。
 	// and do something
 })
 
@@ -38,11 +39,13 @@ function gk_get(url, dosomething) {
 			console.log('errorRequestType=get')
 			console.log(err)
 			// 这里可以进行错误记录等。
+			let title = ''
 			if (gk_is2g()) {
-				gk_showToastNoIcon('当前网络状态差，请换个网络重试')
+				title  = '当前网络状态差，请换个网络重试'
 			} else {
-				gk_showToastNoIcon('服务器长时间无反应，请稍后重试！')
+				title = '服务器长时间无反应，请稍后重试！'
 			}
+			gk_showToastNoIcon(title )
 			return  0
 		},
 		complete: function () {
