@@ -323,10 +323,12 @@ function checkWordsInfo(info){
 
 ```
 
-5.暴露接口
+5.暴露接口	
+```
 module.exports = {
   gk_draw: gk_draw
 }
+```
 
 
 6.使用
